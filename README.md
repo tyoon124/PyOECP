@@ -1,5 +1,5 @@
 # PyOECP
-## General Description
+PyOECP is a purely Python-based flexible open-source software for estimating and modeling the complex permittivity obtained from the open-ended coaxial probe (OECP) technique. 
 ## Installation
 ## Usage
 ## Citation Information
