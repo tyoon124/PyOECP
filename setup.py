@@ -9,11 +9,11 @@ from setuptools import setup
 
 setup(
       name = 'PyOECP',
-      version = '0.0.1',
+      version = '0.5.0',
       author = 'Tae Jun Yoon',
-      author_email = 'oheim124@gmail.com',
+      author_email = 'tyoon@cnu.ac.kr',
       packages=['PyOECP'],
       py_modules=['PyOECP/Transform','PyOECP/References','PyOECP/Models'],
-      url='To be declared',
+      url='https://github.com/tyoon124',
       description='A flexible open-source software library for estimating and modeling the complex permittivity based on the open-ended coaxial probe technique',
 )
