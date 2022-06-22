@@ -130,7 +130,8 @@ def Continuous(frequency,epsilon,parameters,alpha = 0.05):
 class MCMC:
     ''' Perform Markov chain Monte Carlo simulation for estimating the parameters. '''
     def __init__(self,frequency,data,par,production,
-                 lb=None,ub=None,control=None,burnin=None,Rate=0.10):
+                 lb=None,ub=None,control=None,burnin=None,Rate=0.10,
+                 weight=None):
         ''' Input arguments
         data: Experimental data to fit.
         par: Model parameters. This variable should be generated from Parameters.Parameters().
@@ -142,6 +143,7 @@ class MCMC:
         burnin: The length of the burnin run. If not given, 1/4 of the production run.        
         Accept: acceptance rate when rejected.
         Rate: the magnitude of change (Gaussian width)
+        Weight: the uncertainty of the measured data can be used as a weight.
         '''
         
         self.frequency = frequency
@@ -151,6 +153,7 @@ class MCMC:
         if burnin is None:
             burnin = int(production/4)
         self.burnin = burnin
+        self.weight = weight
         self.Names = list(par.keys())
         
         if lb is None:            
@@ -242,7 +245,10 @@ class MCMC:
     
     def chi2(self,data1):
         ''' Calculate the chi2. We use minimum chi-squared method. '''
-        chi2 = np.sum(np.absolute(self.data - data1)**2)
+        if self.weight is None:
+            chi2 = np.sum(np.absolute(self.data - data1)**2)
+        else:
+            chi2 = np.sum(np.absolute(self.data - data1)**2/np.absolute(self.weight)**2)
         return chi2        
     
     def Run(self):
