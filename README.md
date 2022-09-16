@@ -7,13 +7,13 @@ This Package will be uploaded to the developer's webpage and pip.
 Some examples based on synthetic data and experimental data are available in the Examples folder. The analysis and interpretation is available in the relevant article.
 ## Citation Information
 If you think this package was useful, please consider citing the following article.
-@misc{yoon2021pyoecp,
-      title={PyOECP: A flexible open-source software library for estimating and modeling the complex permittivity based on the open-ended coaxial probe (OECP) technique}, 
-      author={Tae Jun Yoon and Katie A. Maerzke and Robert P. Currier and Alp T. Findikoglu},
-      year={2021},
-      eprint={2109.14889},
-      archivePrefix={arXiv},
-      primaryClass={physics.ins-det}
+@article{yoon2022pyoecp,
+  title={PyOECP: A flexible open-source software library for estimating and modeling the complex permittivity based on the open-ended coaxial probe (OECP) technique},
+  author={Yoon, Tae Jun and Maerzke, Katie A and Currier, Robert P and Findikoglu, Alp T},
+  journal={Computer Physics Communications},
+  pages={108517},
+  year={2022},
+  publisher={Elsevier}
 }
 ## OSS License Information
 © 2021. Triad National Security, LLC. All rights reserved.
