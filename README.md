@@ -4,7 +4,7 @@ PyOECP is a purely Python-based flexible open-source software for estimating and
 ## Installation
 **(Updated) This package can be installed by downloading the package and installing it. Specifically, the following is a procedure.**
 
-1. Download the package by clicking the Code button and clikcing Download ZIP.
+1. Download the package by clicking the *Code* button and clicking *Download ZIP*.
 2. Unzip the package. Then, you will create a folder named (for instance) C:/Users/User/Download/PyOECP-main
 3. In terminal (or Anaconda Prompt), go to the folder. Then, just type "pip install ." (Or, you can type "python setup.py install")
 4. Enjoy! You can load the package in both Jupyter Notebook and your IDE.
