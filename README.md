@@ -2,7 +2,13 @@
 PyOECP is a purely Python-based flexible open-source software for estimating and modeling the complex permittivity obtained from the open-ended coaxial probe (OECP) technique. The software library contains the dielectric spectra of common reference liquids, which can be used to transform the reflection coefficient into the dielectric spectra. Several Python routines that are commonly employed (e.g., SciPy and NumPy) in the field of science and engineering are only required so that the users can alter the software structure depending on their needs. The modeling algorithm exploits the Markov Chain Monte Carlo method for the data regression. The discrete relaxation models can be built by a proper combination of well-known relaxation models. In addition to these models, the electrode polarization, which is a common measurement artifact for interpreting the dielectric spectra, can be incorporated in the modeling algorithm. A continuous relaxation model, which solves the Fredholm integral equation of the first kind (a mathematically ill-posed problem) is also included. This open-source software enables users to freely adjust the physical parameters so that they can obtain physical insight into their materials under test and will be consistently updated for more accurate measurement and interpretation of dielectric spectra in an automated manner.
 
 ## Installation
-This Package will be uploaded to the developer's webpage and pip.
+**(Updated) This package can be installed by downloading the package and installing it. Specifically, the following is a procedure.**
+
+1. Download the package by clicking the Code button and clikcing Download ZIP.
+2. Unzip the package. Then, you will create a folder named (for instance) C:/Users/User/Download/PyOECP-main
+3. In terminal (or Anaconda Prompt), go to the folder. Then, just type "pip install ." (Or, you can type "python setup.py install")
+4. Enjoy! You can load the package in both Jupyter Notebook and your IDE.
+
 ## Usage
 Some examples based on synthetic data and experimental data are available in the Examples folder. The analysis and interpretation is available in the relevant article.
 ## Citation Information
