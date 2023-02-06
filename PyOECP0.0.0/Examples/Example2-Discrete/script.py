@@ -52,7 +52,7 @@ Estimation.Set('Bs',0.12)
 
 InitialPar = Estimation.Parameters()
 
-production = 100000
+production = 30000
 burnin = 5000
 
 Trial = Models.MCMC(frequency,epsilon,InitialPar,production,
@@ -78,19 +78,7 @@ plt.legend(loc='upper right', ncol=1, fontsize='xx-small',edgecolor='k')
 
 plt.show()
 
-''' Quantify the parameter uncertainty. '''
 Trial.Examine(Chains,par)
-
-print('------------------- Parameters and Errors -------------------')
-for ele in Chains.keys():
-    if len(Chains[ele]) != 0 or not all(np.isnan(Chains[ele])):
-        if Chains[ele].shape[1] == 1:
-            print(ele,':',np.mean(Chains[ele]),np.std(Chains[ele]))
-        else:
-            for Sub in range(Chains[ele].shape[1]):
-                print(ele,':',np.mean(Chains[ele][:,Sub]),
-                      np.std(Chains[ele][:,Sub]))
-
 
 ''' 2.2 Two-Debye relaxation model. '''
 
@@ -126,7 +114,7 @@ Estimation.Set('times',relaxation)
 InitialPar = Estimation.Parameters()
 
 
-production = 100000
+production = 30000
 
 Trial = Models.MCMC(frequency,epsilon,InitialPar,production,
                        lb=None,ub=None,control=None,burnin=None,
@@ -150,16 +138,3 @@ plt.ylabel(r'$\epsilon$')
 plt.legend(loc='center left', ncol=1, fontsize='xx-small',edgecolor='k')
 
 Trial.Examine(Chains,par)
-
-print('------------------- Parameters and Errors -------------------')
-for ele in Chains.keys():
-    try:
-        if len(Chains[ele]) != 0 or not all(np.isnan(Chains[ele])):
-            if Chains[ele].shape[1] == 1:
-                print(ele,':',np.mean(Chains[ele]),np.std(Chains[ele]))
-            else:
-                for Sub in range(Chains[ele].shape[1]):
-                    print(ele,':',np.mean(Chains[ele][:,Sub]),
-                          np.std(Chains[ele][:,Sub]))
-    except TypeError:
-        continue

@@ -55,7 +55,6 @@ def Short(frequency,temperature=25,c=None):
     data['maxTemperature (C)'] = np.inf
     data['frequency'] = frequency
     data['Temperature (C)'] = temperature
-    data['epsilon'] = np.ones((len(frequency)),dtype=complex)*1e10
             
     return data
 
