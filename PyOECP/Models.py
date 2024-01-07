@@ -165,7 +165,7 @@ class MCMC:
                     for ele in range(len(lb[Name])):
                         lb[Name][ele] = 0.0
         
-        lb['ei'] = np.array([1.0])
+            lb['ei'] = np.array([1.0])
         
         if ub is None:            
             ub = copy.deepcopy(par)
@@ -176,8 +176,8 @@ class MCMC:
                     for ele in range(len(ub[Name])):
                         ub[Name][ele] = np.inf
         
-        for ind in range(len(ub['magnitudes'])):
-            ub['magnitudes'][ind] = np.max(np.real(data)) - 1
+            for ind in range(len(ub['magnitudes'])):
+                ub['magnitudes'][ind] = np.max(np.real(data)) - 1
             
         if control is None:
             control = copy.deepcopy(par)
@@ -194,7 +194,7 @@ class MCMC:
         self.lb = lb
         self.ub = ub
         self.control = control        
-        
+    
         self.InitialRate = copy.deepcopy(control)
         for Name in self.Names:
             if self.InitialRate[Name] is False:
@@ -240,6 +240,8 @@ class MCMC:
         Par = par1[Name][ind]*(1+change)
         if Par > self.lb[Name][ind] and Par < self.ub[Name][ind]:
             par1[Name][ind] = Par
+        else:
+            par1[Name][ind] = par1[Name][ind]
         
         return par1
     
@@ -343,10 +345,12 @@ class MCMC:
             
             name = Controllables[ele]                                    
             if Chain[name].shape[1] == 1:
-                ax.plot(Chain[name],"k",alpha=0.8)
+                ax.plot(Chain[name],"k",alpha=0.8,
+                        linewidth=0.5)
             else:
                 for Sub in range(Chain[name].shape[1]):
-                    ax.plot(Chain[name][:,Sub],"k",alpha=0.8)
+                    ax.plot(Chain[name][:,Sub],"k",alpha=0.8,
+                            linewidth=0.5)
             if TruePar is not None:
                 if TruePar[name] is not None:                     
                     for Sub in range(len(TruePar[name])):
@@ -359,9 +363,6 @@ class MCMC:
         figure.tight_layout()
         if filename is not None:
             figure.savefig(filename,dpi=500)
-        else:
-            plt.show()
-        
-        
-        
-        
+        #else:
+            #plt.show()
+        return figure
