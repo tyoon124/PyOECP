@@ -130,7 +130,8 @@ def Continuous(frequency,epsilon,parameters,alpha = 0.05):
 class MCMC:
     ''' Perform Markov chain Monte Carlo simulation for estimating the parameters. '''
     def __init__(self,frequency,data,par,production,
-                 lb=None,ub=None,control=None,burnin=None,Rate=0.10):
+                 lb=None,ub=None,control=None,burnin=None,Rate=0.10,
+                 weight=None):
         ''' Input arguments
         data: Experimental data to fit.
         par: Model parameters. This variable should be generated from Parameters.Parameters().
@@ -142,6 +143,7 @@ class MCMC:
         burnin: The length of the burnin run. If not given, 1/4 of the production run.        
         Accept: acceptance rate when rejected.
         Rate: the magnitude of change (Gaussian width)
+        Weight: the uncertainty of the measured data can be used as a weight.
         '''
         
         self.frequency = frequency
@@ -151,6 +153,7 @@ class MCMC:
         if burnin is None:
             burnin = int(production/4)
         self.burnin = burnin
+        self.weight = weight
         self.Names = list(par.keys())
         
         if lb is None:            
@@ -162,7 +165,7 @@ class MCMC:
                     for ele in range(len(lb[Name])):
                         lb[Name][ele] = 0.0
         
-        lb['ei'] = np.array([1.0])
+            lb['ei'] = np.array([1.0])
         
         if ub is None:            
             ub = copy.deepcopy(par)
@@ -173,8 +176,8 @@ class MCMC:
                     for ele in range(len(ub[Name])):
                         ub[Name][ele] = np.inf
         
-        for ind in range(len(ub['magnitudes'])):
-            ub['magnitudes'][ind] = np.max(np.real(data)) - 1
+            for ind in range(len(ub['magnitudes'])):
+                ub['magnitudes'][ind] = np.max(np.real(data)) - 1
             
         if control is None:
             control = copy.deepcopy(par)
@@ -191,7 +194,7 @@ class MCMC:
         self.lb = lb
         self.ub = ub
         self.control = control        
-        
+    
         self.InitialRate = copy.deepcopy(control)
         for Name in self.Names:
             if self.InitialRate[Name] is False:
@@ -237,12 +240,17 @@ class MCMC:
         Par = par1[Name][ind]*(1+change)
         if Par > self.lb[Name][ind] and Par < self.ub[Name][ind]:
             par1[Name][ind] = Par
+        else:
+            par1[Name][ind] = par1[Name][ind]
         
         return par1
     
     def chi2(self,data1):
         ''' Calculate the chi2. We use minimum chi-squared method. '''
-        chi2 = np.sum(np.absolute(self.data - data1)**2)
+        if self.weight is None:
+            chi2 = np.sum(np.absolute(self.data - data1)**2)
+        else:
+            chi2 = np.sum(np.absolute(self.data - data1)**2/np.absolute(self.weight)**2)
         return chi2        
     
     def Run(self):
@@ -337,10 +345,12 @@ class MCMC:
             
             name = Controllables[ele]                                    
             if Chain[name].shape[1] == 1:
-                ax.plot(Chain[name],"k",alpha=0.8)
+                ax.plot(Chain[name],"k",alpha=0.8,
+                        linewidth=0.5)
             else:
                 for Sub in range(Chain[name].shape[1]):
-                    ax.plot(Chain[name][:,Sub],"k",alpha=0.8)
+                    ax.plot(Chain[name][:,Sub],"k",alpha=0.8,
+                            linewidth=0.5)
             if TruePar is not None:
                 if TruePar[name] is not None:                     
                     for Sub in range(len(TruePar[name])):
@@ -353,7 +363,6 @@ class MCMC:
         figure.tight_layout()
         if filename is not None:
             figure.savefig(filename,dpi=500)
-        else:
-            plt.show()
-        
-        
+        #else:
+            #plt.show()
+        return figure
